@@ -7,11 +7,14 @@ import java.util.List;
 
 public class Game {
 
+    private WordRepository wordRepository;
+
     private int id;
     private List<Round> completedRounds;
     private Round currentRound;
 
-    public Game(int id) {
+    public Game(int id, WordRepository wordRepository) {
+        this.wordRepository = wordRepository;
         this.id = id;
         completedRounds = new ArrayList<>();
     }
@@ -20,18 +23,26 @@ public class Game {
         return this.id;
     }
 
-    public Feedback newRound(Round round) {
+    public Feedback newRound() {
         if (this.currentRound != null) {
             this.completedRounds.add(this.currentRound);
         }
 
-        this.currentRound = round;
+        this.currentRound = new Round(wordRepository, nextRoundWordLength());
 
-        return round.startRound();
+        return this.currentRound.startRound();
     }
 
-    public int nextRoundWordLength() {
-        return 5;
+    private int nextRoundWordLength() {
+        if (this.currentRound == null) {
+            return 5;
+        }
+
+        if (this.currentRound.getWordLength() == 7) {
+            return 5;
+        } else {
+            return this.currentRound.getWordLength() + 1;
+        }
     }
 
     public Feedback guess(String guess) {

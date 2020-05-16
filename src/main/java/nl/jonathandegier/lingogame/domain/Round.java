@@ -62,6 +62,10 @@ public class Round {
         return 50 - (guesses * 10);
     }
 
+    int getWordLength() {
+        return this.word.length();
+    }
+
     private void validateGuess(String guess, FeedbackBuilder builder) {
 
         if (!wordRepository.validWord(guess)) {
