@@ -8,19 +8,18 @@ import java.time.Instant;
 
 public class Round {
 
+    private static final int MAX_GUESSES = 5;
+
     private WordRepository wordRepository;
 
     private String word;
     private int guesses;
     private Instant lastGuess;
-    private boolean correct;
 
     public Round(WordRepository wordRepository, int length) {
         this.wordRepository = wordRepository;
-
         this.word = this.wordRepository.randomWord(length);
         this.guesses = 0;
-        this.correct = false;
     }
 
     public Feedback startRound() {
@@ -33,6 +32,12 @@ public class Round {
     }
 
     public Feedback guess(String guess) {
+        if (this.guesses == MAX_GUESSES) {
+            throw new IllegalArgumentException("This game is already over");
+        }
+
+        this.guesses++;
+
         FeedbackBuilder builder = new FeedbackBuilder()
                 .word(this.word)
                 .guess(guess)
@@ -48,11 +53,10 @@ public class Round {
 
         validateGuess(guess, builder);
 
-        if (builder.getExplaination() == FeedbackExplaination.CORRECT) {
-            this.correct = true;
+        if (this.guesses == MAX_GUESSES && builder.getExplaination() != FeedbackExplaination.CORRECT) {
+            builder.explaination(FeedbackExplaination.GAME_OVER);
         }
 
-        this.guesses++;
         this.lastGuess = Instant.now();
 
         return builder.build();

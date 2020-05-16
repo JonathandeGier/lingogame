@@ -7,4 +7,5 @@ public enum FeedbackExplaination {
     WORD_TOO_SHORT,
     WORD_TOO_LONG,
     CORRECT,
+    GAME_OVER,
 }
