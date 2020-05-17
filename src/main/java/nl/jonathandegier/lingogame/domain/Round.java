@@ -26,7 +26,7 @@ public class Round {
         this.lastGuess = Instant.now();
         return new FeedbackBuilder()
                 .word(this.word)
-                .guess(Character.toString(this.word.charAt(0)))
+                .guess(Character.toString(this.word.charAt(0)), MAX_GUESSES, MAX_GUESSES - this.guesses)
                 .explaination(FeedbackExplaination.GOOD_GUESS)
                 .build();
     }
@@ -40,7 +40,7 @@ public class Round {
 
         FeedbackBuilder builder = new FeedbackBuilder()
                 .word(this.word)
-                .guess(guess)
+                .guess(guess, MAX_GUESSES, MAX_GUESSES - this.guesses)
                 .explaination(FeedbackExplaination.GOOD_GUESS);
 
         if (this.word.equals(guess)) {

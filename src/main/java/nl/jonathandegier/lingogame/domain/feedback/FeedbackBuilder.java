@@ -8,14 +8,18 @@ public class FeedbackBuilder {
     private String word;
     private String guess;
     private FeedbackExplaination explaination;
+    private int totalGuesses;
+    private int guessesLeft;
 
     public FeedbackBuilder word(String word) {
         this.word = word;
         return this;
     }
 
-    public FeedbackBuilder guess(String guess) {
+    public FeedbackBuilder guess(String guess, int totalGuesses, int guessesLeft) {
         this.guess = guess;
+        this.totalGuesses = totalGuesses;
+        this.guessesLeft = guessesLeft;
         return this;
     }
 
@@ -40,7 +44,7 @@ public class FeedbackBuilder {
             feedbackElements = invalidFeedback();
         }
 
-        return new Feedback(this.guess, feedbackElements, this.explaination);
+        return new Feedback(this.guess, feedbackElements, this.explaination, this.totalGuesses, this.guessesLeft);
     }
 
     // TODO: Strategy pattern?
