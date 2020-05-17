@@ -1,0 +1,17 @@
+h1 {
+    color: darkcyan;
+}
+
+.home-title {
+    font-size: 10em;
+}
+
+.game-title {
+    font-size: 8em;
+}
+
+.button {
+    width: 300px;
+    font-size: 30px;
+    margin: 10px;
+}
