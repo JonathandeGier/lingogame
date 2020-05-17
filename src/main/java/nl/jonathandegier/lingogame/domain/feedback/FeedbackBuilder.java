@@ -44,7 +44,7 @@ public class FeedbackBuilder {
             feedbackElements = invalidFeedback();
         }
 
-        return new Feedback(this.guess, feedbackElements, this.explaination, this.totalGuesses, this.guessesLeft);
+        return new Feedback(this.guess, feedbackElements, this.explaination, this.totalGuesses, this.guessesLeft, this.word.length());
     }
 
     // TODO: Strategy pattern?

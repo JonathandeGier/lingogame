@@ -9,13 +9,15 @@ public class Feedback {
     private FeedbackExplaination explaination;
     private int totalGuesses;
     private int guessesLeft;
+    private int wordLength;
 
-    public Feedback(String guess, List<FeedbackElement> feedback, FeedbackExplaination explaination, int totalGuesses, int guessesLeft) {
+    public Feedback(String guess, List<FeedbackElement> feedback, FeedbackExplaination explaination, int totalGuesses, int guessesLeft, int wordLength) {
         this.guess = guess;
         this.feedback = feedback;
         this.explaination = explaination;
         this.totalGuesses = totalGuesses;
         this.guessesLeft = guessesLeft;
+        this.wordLength = wordLength;
     }
 
     public String getGuess() {
@@ -36,5 +38,9 @@ public class Feedback {
 
     public int getGuessesLeft() {
         return guessesLeft;
+    }
+
+    public int getWordLength() {
+        return wordLength;
     }
 }
