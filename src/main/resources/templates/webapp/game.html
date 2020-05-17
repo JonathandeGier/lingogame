@@ -8,70 +8,18 @@
     <link rel="stylesheet" th:href="@{/webapp/style/main.css}">
     <link rel="stylesheet" th:href="@{/webapp/style/game.css}">
 </head>
-<body>
+
+
+<body onload="init()">
     <h1 class="text-center game-title">Lingo</h1>
 
-    <table class="game-grid align-center">
-        <tr>
-            <td class="lingo-cell">
-                L
-            </td>
-            <td class="lingo-cell correct">
-                I
-            </td>
-            <td class="lingo-cell present">
-                N
-            </td>
-            <td class="lingo-cell correct">
-                G
-            </td>
-            <td class="lingo-cell correct">
-                O
-            </td>
-            <td class="lingo-cell correct">
-                O
-            </td>
-            <td class="lingo-cell correct">
-                O
-            </td>
-        </tr>
-        <tr>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-        </tr>
-        <tr>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-        </tr>
-        <tr>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-        </tr>
-        <tr>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-            <td class="lingo-cell"></td>
-        </tr>
-    </table>
+    <table id="game" class="game-grid align-center"></table>
 
+    <div class="text-center guess-form">
+        <input  id="guessInput" type="text" class="form-control">
+        <button id="guessButton" class="btn btn-primary guess-button" onclick="guess()">Guess</button>
+    </div>
+
+<script type="text/javascript" th:src="@{/webapp/js/game.js}"></script>
 </body>
 </html>

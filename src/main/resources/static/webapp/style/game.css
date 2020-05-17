@@ -22,3 +22,15 @@
 .present {
     background-color: #ffbf24;
 }
+
+.guess-form {
+    width: 500px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.guess-button {
+    width: 100%;
+    font-size: 20px;
+    margin-top: 10px;
+}
