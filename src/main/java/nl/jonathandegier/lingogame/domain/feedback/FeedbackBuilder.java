@@ -54,7 +54,7 @@ public class FeedbackBuilder {
 
         List<FeedbackElement> feedback = new ArrayList<>();
 
-        for (int i = 0; i < wordChars.length; i++) {
+        for (int i = 0; i < guessChars.length; i++) {
             FeedbackType type;
             if (wordChars[i] == guessChars[i]) {
                 type = FeedbackType.CORRECT;

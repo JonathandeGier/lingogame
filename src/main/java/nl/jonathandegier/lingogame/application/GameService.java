@@ -35,13 +35,21 @@ public class GameService {
         return game.guess(guess);
     }
 
-    public void saveScore(int gameId, String player) {
+    public int getScore(int gameId) {
+        Game game = this.gameRepository.findGame(gameId);
+        return game.calculateScore();
+    }
+
+    public Score saveScore(int gameId, String player) {
         Game game = this.gameRepository.findGame(gameId);
 
         int score = game.calculateScore();
 
-        this.scoreRepository.storeScore(new Score(player, score));
+        Score s = new Score(player, score);
+        this.scoreRepository.storeScore(s);
         this.gameRepository.deleteGame(gameId);
+
+        return s;
     }
 
     public void endGame(int gameId) {
