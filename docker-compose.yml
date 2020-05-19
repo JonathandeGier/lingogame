@@ -1,0 +1,38 @@
+version: "3.7"
+
+services:
+  words_db:
+    image: postgres:12
+    ports:
+      - "54321:5432"
+    networks:
+      - words_db
+    volumes:
+      - "words_db:/data/postgres"
+    environment:
+      POSTGRES_USER: ${POSTGRES_WORDS_USER:-dev}
+      POSTGRES_PASSWORD: ${POSTGRES_WORDS_PASSWORD:-dev}
+      POSTGRES_DB: ${POSTGRES_WORDS_DB:-lingowords}
+
+  game_db:
+    image: postgres:12
+    ports:
+      - "54322:5432"
+    networks:
+      - game_db
+    volumes:
+      - "game_db:/data/postgres"
+    environment:
+      POSTGRES_USER: ${POSTGRES_GAME_USER:-dev}
+      POSTGRES_PASSWORD: ${POSTGRES_GAME_PASSWORD:-dev}
+      POSTGRES_DB: ${POSTGRES_GAME_DB:-lingogame}
+
+networks:
+  words_db:
+    driver: bridge
+  game_db:
+    driver: bridge
+
+volumes:
+  words_db:
+  game_db:
