@@ -38,6 +38,10 @@ public class Round {
             throw new IllegalArgumentException("This game is already over");
         }
 
+        if (this.lastGuess == null) {
+            throw new IllegalArgumentException("Round not started yet");
+        }
+
         this.guesses++;
 
         FeedbackBuilder builder = new FeedbackBuilder()
