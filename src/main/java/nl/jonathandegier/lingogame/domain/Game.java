@@ -25,24 +25,16 @@ public class Game {
 
     public Feedback newRound() {
         if (this.currentRound != null) {
+            if (!this.currentRound.roundCompleted()) {
+                throw new IllegalArgumentException("Uncompleted round");
+            }
+
             this.completedRounds.add(this.currentRound);
         }
 
         this.currentRound = new Round(wordRepository, nextRoundWordLength());
 
         return this.currentRound.startRound();
-    }
-
-    private int nextRoundWordLength() {
-        if (this.currentRound == null) {
-            return 5;
-        }
-
-        if (this.currentRound.getWordLength() == 7) {
-            return 5;
-        } else {
-            return this.currentRound.getWordLength() + 1;
-        }
     }
 
     public Feedback guess(String guess) {
@@ -57,5 +49,17 @@ public class Game {
         }
 
         return sum;
+    }
+
+    private int nextRoundWordLength() {
+        if (this.currentRound == null) {
+            return 5;
+        }
+
+        if (this.currentRound.getWordLength() == 7) {
+            return 5;
+        }
+
+        return this.currentRound.getWordLength() + 1;
     }
 }

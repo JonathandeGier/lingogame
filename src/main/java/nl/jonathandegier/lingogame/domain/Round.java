@@ -15,11 +15,13 @@ public class Round {
     private String word;
     private int guesses;
     private Instant lastGuess;
+    private boolean complete;
 
     public Round(WordRepository wordRepository, int length) {
         this.wordRepository = wordRepository;
         this.word = this.wordRepository.randomWord(length);
         this.guesses = 0;
+        this.complete = false;
     }
 
     public Feedback startRound() {
@@ -47,14 +49,19 @@ public class Round {
             builder.explaination(FeedbackExplaination.CORRECT);
         }
 
-        if (!inTime()) {
+        if (!this.inTime()) {
             builder.explaination(FeedbackExplaination.OUT_OF_TIME);
         }
 
-        validateGuess(guess, builder);
+        this.validateGuess(guess, builder);
 
         if (this.guesses == MAX_GUESSES && builder.getExplaination() != FeedbackExplaination.CORRECT) {
             builder.explaination(FeedbackExplaination.GAME_OVER);
+            this.complete = true;
+        }
+
+        if (builder.getExplaination() == FeedbackExplaination.CORRECT) {
+            this.complete = true;
         }
 
         this.lastGuess = Instant.now();
@@ -63,11 +70,15 @@ public class Round {
     }
 
     public int calculateScore() {
-        return 50 - (guesses * 10);
+        return ((MAX_GUESSES + 1) * 10) - (guesses * 10);
     }
 
-    int getWordLength() {
+    public int getWordLength() {
         return this.word.length();
+    }
+
+    public boolean roundCompleted() {
+        return this.complete;
     }
 
     private void validateGuess(String guess, FeedbackBuilder builder) {
