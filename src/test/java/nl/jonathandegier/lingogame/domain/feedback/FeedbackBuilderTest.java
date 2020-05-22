@@ -1,12 +1,15 @@
 package nl.jonathandegier.lingogame.domain.feedback;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@DisplayName("FeedbackBuilder Test")
 public class FeedbackBuilderTest {
 
     @Test
+    @DisplayName("Test normal feedback")
     void test_build_normal_feedback() {
         String word = "woord";
         String guess = "wordt";
@@ -36,6 +39,7 @@ public class FeedbackBuilderTest {
     }
 
     @Test
+    @DisplayName("Test invalid feedback")
     void test_build_invalid_feedback() {
         String word = "woord";
         String guess = "wordt";
@@ -60,6 +64,7 @@ public class FeedbackBuilderTest {
     }
 
     @Test
+    @DisplayName("Test get explaination")
     void test_get_explaination() {
         String word = "woord";
         String guess = "wordt";
@@ -72,6 +77,7 @@ public class FeedbackBuilderTest {
     }
 
     @Test
+    @DisplayName("Test missing parameters")
     void test_build_missing_parameters() {
         String word = "woord";
         String guess = "wordt";

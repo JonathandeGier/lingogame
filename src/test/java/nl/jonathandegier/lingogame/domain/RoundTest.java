@@ -1,9 +1,9 @@
 package nl.jonathandegier.lingogame.domain;
 
 import nl.jonathandegier.lingogame.domain.feedback.Feedback;
-import nl.jonathandegier.lingogame.domain.feedback.FeedbackElement;
 import nl.jonathandegier.lingogame.domain.feedback.FeedbackExplaination;
 import nl.jonathandegier.lingogame.domain.feedback.FeedbackType;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -17,7 +17,7 @@ import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-
+@DisplayName("Round Test")
 public class RoundTest {
 
     private static Stream<Arguments> scoresWithAmountOfGuesses() {
@@ -41,6 +41,7 @@ public class RoundTest {
     }
 
     @Test
+    @DisplayName("Test start round")
     void test_start_round() {
         Round round = new Round(wordRepositoryMock(), 5);
 
@@ -59,6 +60,7 @@ public class RoundTest {
 
     @ParameterizedTest
     @MethodSource("scoresWithAmountOfGuesses")
+    @DisplayName("Test calculate score")
     void test_calculate_score(int guesses, int expectedScore) {
         Round round = new Round(wordRepositoryMock(), 5);
         round.startRound();
@@ -71,18 +73,21 @@ public class RoundTest {
     }
 
     @Test
+    @DisplayName("Test get word length")
     void test_get_word_length() {
         Round round = new Round(wordRepositoryMock(), 5);
         assertEquals(5, round.getWordLength());
     }
 
     @Test
+    @DisplayName("Test round not completed")
     void test_round_not_completed() {
         Round round = new Round(wordRepositoryMock(), 5);
         assertFalse(round.roundCompleted());
     }
 
     @Test
+    @DisplayName("Test round completed")
     void test_round_completed() {
         Round round = new Round(wordRepositoryMock(), 5);
         round.startRound();
@@ -93,6 +98,7 @@ public class RoundTest {
 
     @ParameterizedTest
     @MethodSource("simpleGuesses")
+    @DisplayName("Test simple guesses")
     void test_simple_guesses(String guess, FeedbackExplaination expectedExplaination) {
         Round round = new Round(wordRepositoryMock(), 5);
         round.startRound();
@@ -101,6 +107,7 @@ public class RoundTest {
     }
 
     @Test
+    @DisplayName("Test guess out of time")
     void test_guess_OUT_OF_TIME() {
         Round round = new Round(wordRepositoryMock(), 5);
         round.startRound();
@@ -113,6 +120,7 @@ public class RoundTest {
     }
 
     @Test
+    @DisplayName("Test last guess game over")
     void test_guess_GAME_OVER() {
         Round round = new Round(wordRepositoryMock(), 5);
         round.startRound();
@@ -128,6 +136,7 @@ public class RoundTest {
     }
 
     @Test
+    @DisplayName("Test guess while round not started")
     void test_not_started_throws_exception() {
         Round round = new Round(wordRepositoryMock(), 5);
 
@@ -137,6 +146,7 @@ public class RoundTest {
     }
 
     @Test
+    @DisplayName("Test out of guesses")
     void test_out_of_guesses_throws_exception() {
         Round round = new Round(wordRepositoryMock(), 5);
         round.startRound();

@@ -1,13 +1,16 @@
 package nl.jonathandegier.lingogame.domain;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@DisplayName("Game Test")
 public class GameTest {
 
     @Test
+    @DisplayName("Test get ID")
     void test_get_id() {
         int id = 1;
         Game game = new Game(id, null);
@@ -15,6 +18,7 @@ public class GameTest {
     }
 
     @Test
+    @DisplayName("Test round length sequence")
     void test_round_word_lengths() {
         var wordRepositoryMock = wordRepositoryMock();
 
@@ -35,6 +39,7 @@ public class GameTest {
     }
 
     @Test
+    @DisplayName("Test add round while uncompleted")
     void test_new_round_while_uncompleted() {
         var wordRepositoryMock = wordRepositoryMock();
 
@@ -47,6 +52,7 @@ public class GameTest {
     }
 
     @Test
+    @DisplayName("Test guess")
     void test_guess() {
         var wordRepositoryMock = wordRepositoryMock();
 
@@ -60,6 +66,7 @@ public class GameTest {
     }
 
     @Test
+    @DisplayName("Test calculate score")
     void test_calculate_score() {
         var wordRepositoryMock = wordRepositoryMock();
 
