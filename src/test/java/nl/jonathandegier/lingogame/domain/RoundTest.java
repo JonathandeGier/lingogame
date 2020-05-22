@@ -136,6 +136,22 @@ public class RoundTest {
     }
 
     @Test
+    @DisplayName("Test guess correct on last try")
+    void test_guess_CORRECT_last_try() {
+        Round round = new Round(wordRepositoryMock(), 5);
+        round.startRound();
+
+        // 5 incorrect guesses
+        round.guess("wordt");
+        round.guess("wordt");
+        round.guess("wordt");
+        round.guess("wordt");
+        Feedback feedback = round.guess("woord");
+
+        assertEquals(FeedbackExplaination.CORRECT, feedback.getExplaination());
+    }
+
+    @Test
     @DisplayName("Test guess while round not started")
     void test_not_started_throws_exception() {
         Round round = new Round(wordRepositoryMock(), 5);

@@ -77,13 +77,39 @@ public class FeedbackBuilderTest {
     }
 
     @Test
-    @DisplayName("Test missing parameters")
-    void test_build_missing_parameters() {
-        String word = "woord";
+    @DisplayName("Test missing word")
+    void test_build_missing_word() {
         String guess = "wordt";
         var builder = new FeedbackBuilder()
                 .guess(guess, 5, 5)
                 .explaination(FeedbackExplaination.WORD_DOES_NOT_EXIST);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            builder.build();
+        });
+    }
+
+    @Test
+    @DisplayName("Test missing guess")
+    void test_build_missing_guess() {
+        String word = "woord";
+        var builder = new FeedbackBuilder()
+                .word(word)
+                .explaination(FeedbackExplaination.WORD_DOES_NOT_EXIST);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            builder.build();
+        });
+    }
+
+    @Test
+    @DisplayName("Test missing explaination")
+    void test_build_missing_explaination() {
+        String word = "woord";
+        String guess = "wordt";
+        var builder = new FeedbackBuilder()
+                .word(word)
+                .guess(guess, 5, 5);
 
         assertThrows(IllegalArgumentException.class, () -> {
             builder.build();
