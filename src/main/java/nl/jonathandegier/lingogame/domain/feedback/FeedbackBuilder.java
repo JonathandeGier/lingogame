@@ -75,13 +75,8 @@ public class FeedbackBuilder {
 
         List<FeedbackElement> feedback = new ArrayList<>();
 
-        for (int i = 0; i < this.word.length(); i++) {
-
-            if (i < guessChars.length) {
-                feedback.add(new FeedbackElement(guessChars[i], FeedbackType.INVALID));
-            } else {
-                feedback.add(new FeedbackElement('0', FeedbackType.INVALID));
-            }
+        for (char letter : guessChars) {
+            feedback.add(new FeedbackElement(letter, FeedbackType.INVALID));
         }
 
         return feedback;
