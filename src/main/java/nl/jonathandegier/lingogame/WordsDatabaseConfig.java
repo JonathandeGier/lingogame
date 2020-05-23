@@ -52,14 +52,4 @@ public class WordsDatabaseConfig {
 
         return em;
     }
-
-    @Bean
-    public PlatformTransactionManager wordsTransactionManager() {
-
-        JpaTransactionManager transactionManager
-                = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(
-                wordsEntityManager().getObject());
-        return transactionManager;
-    }
 }
