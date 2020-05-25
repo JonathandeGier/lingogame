@@ -1,6 +1,13 @@
+var gameId;
 var initialFeedback;
-
 var givenFeedbacks;
+
+var guessBlock = document.getElementById('guessBlock');
+var nextRoundBlock = document.getElementById('nextRoundBlock');
+var gameOverBlock = document.getElementById('gameOverBlock');
+
+var messageBlock = document.getElementById('messageBlock');
+var scoreLabel = document.getElementById('scoreLabel');
 
 document.getElementById("guessInput").addEventListener("keypress", function (ev) {
     if (ev.key === "Enter") {
@@ -8,44 +15,50 @@ document.getElementById("guessInput").addEventListener("keypress", function (ev)
     }
 });
 
+
 function init() {
-    // TODO: api request to start a new game
+    axios.post('/api/v1/game')
+        .then(response => {
+            gameId = response.data.gameId;
+        })
+        .catch(error => console.error(error));
 
     buildEmptyTable(5, 5);
-
-
+    displayScore(0);
 }
 
 function startRound() {
-    // TODO: api request to start a new round and fill initialFeedback and empty givenFeedbacks
+    axios.post('/api/v1/game/' + gameId + '/round')
+        .then(response => {
+            initialFeedback = response.data;
+            givenFeedbacks = [];
 
-    initialFeedback = {
-        guess: "w",
-        feedback: [
-            {
-                letter: "w",
-                feedbackType: "CORRECT"
-            }
-        ],
-        wordLength: 5,
-        totalGuesses: 5,
-        guessesLeft: 5
-    };
-
-    givenFeedbacks = [];
-
-    buildTable();
+            buildTable();
+            showGuessBlock();
+        })
+        .catch(error => console.error(error));
 }
 
 function guess() {
     var input = document.getElementById("guessInput");
-    var guess = input.value;
+    var guess = input.value.toLowerCase();
 
-    // TODO: api request to guess
+    axios.post('/api/v1/game/' + gameId + '/guess', {guess: guess})
+        .then(response => {
+            givenFeedbacks.push(response.data);
 
-    givenFeedbacks.push({guess: guess});
-    buildTable()
-    input.value = "";
+            buildTable();
+            displayMessage(response.data.explaination);
+            input.value = "";
+
+            if (response.data.explaination === 'CORRECT') {
+                showNextRoundBlock();
+                updateScore();
+            } else if (response.data.explaination === 'GAME_OVER') {
+                showGameOverBlock();
+            }
+        })
+        .catch(error => console.error(error));
 }
 
 function buildTable() {
@@ -80,10 +93,47 @@ function buildTable() {
                 } else if (givenFeedbacks[i - 1] !== undefined && givenFeedbacks[i - 1].feedback[j] !== undefined && givenFeedbacks[i - 1].feedback[j].feedbackType === "CORRECT") {
                     // display correct letters of last feedback
                     cell.innerHTML = givenFeedbacks[i - 1].guess.charAt(j).toUpperCase();
+                    // TODO: correct letter from all given feedbacks + initial feedback
+                    // TODO: if last guess was correct, do nothing
                 }
             }
         }
     }
+}
+
+function updateScore() {
+    axios.get('/api/v1/game/' + gameId + '/score')
+        .then(response => {
+            displayScore(response.data.score);
+        })
+        .catch(error => console.error(error));
+}
+
+function displayScore(score) {
+    scoreLabel.innerHTML = score;
+}
+
+
+function showGuessBlock() {
+    guessBlock.style.display = 'block';
+    nextRoundBlock.style.display = 'none';
+    gameOverBlock.style.display = 'none';
+}
+
+function showNextRoundBlock() {
+    guessBlock.style.display = 'none';
+    nextRoundBlock.style.display = 'block';
+    gameOverBlock.style.display = 'none';
+}
+
+function showGameOverBlock() {
+    guessBlock.style.display = 'none';
+    nextRoundBlock.style.display = 'none';
+    gameOverBlock.style.display = 'block';
+}
+
+function displayMessage(message) {
+    messageBlock.innerHTML = explainationToString(message);
 }
 
 function buildEmptyTable(wordLength, guesses) {
@@ -103,3 +153,17 @@ function buildEmptyTable(wordLength, guesses) {
         }
     }
 }
+
+function explainationToString(explaination) {
+    return strings[explaination];
+}
+
+var strings = {
+    GOOD_GUESS: "",
+    OUT_OF_TIME: "Buiten de tijd",
+    WORD_DOES_NOT_EXIST: "Woord bestaat niet",
+    WORD_TOO_SHORT: "Woord is te kort",
+    WORD_TOO_LONG: "woord is te lang",
+    CORRECT: "",
+    GAME_OVER: "Game Over",
+};

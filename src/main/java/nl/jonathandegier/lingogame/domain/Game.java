@@ -48,7 +48,7 @@ public class Game {
             sum += r.calculateScore();
         }
 
-        return sum;
+        return sum + this.currentRound.calculateScore();
     }
 
     private int nextRoundWordLength() {

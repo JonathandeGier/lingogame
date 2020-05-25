@@ -38,7 +38,9 @@ public class FeedbackBuilder {
         }
 
         List<FeedbackElement> feedbackElements;
-        if (explaination == FeedbackExplaination.GOOD_GUESS || explaination == FeedbackExplaination.CORRECT) {
+        if (explaination == FeedbackExplaination.GOOD_GUESS
+                || explaination == FeedbackExplaination.CORRECT
+                || explaination == FeedbackExplaination.GAME_OVER) {
             feedbackElements = normalFeedback();
         } else {
             feedbackElements = invalidFeedback();
@@ -60,6 +62,7 @@ public class FeedbackBuilder {
                 type = FeedbackType.CORRECT;
             } else if (this.word.contains(Character.toString(guessChars[i]))) {
                 type = FeedbackType.PRESENT;
+                // todo: only if letter not in correct and not already marked as present
             } else {
                 type = FeedbackType.ABSENT;
             }

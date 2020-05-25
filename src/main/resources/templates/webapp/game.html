@@ -13,13 +13,27 @@
 <body onload="init()">
     <h1 class="text-center game-title">Lingo</h1>
 
+    <div class="text-center">Score: <span id="scoreLabel"></span></div>
+    <div id="messageBlock" class="text-center"></div>
+
     <table id="game" class="game-grid align-center"></table>
 
-    <div class="text-center guess-form">
+    <div id="guessBlock" class="text-center game-form" style="display: none;">
         <input  id="guessInput" type="text" class="form-control">
-        <button id="guessButton" class="btn btn-primary guess-button" onclick="guess()">Guess</button>
+        <button id="guessButton" class="btn btn-primary game-button" onclick="guess()">Raden</button>
     </div>
 
-<script type="text/javascript" th:src="@{/webapp/js/game.js}"></script>
+    <div id="nextRoundBlock" class="text-center game-form">
+        <button id="nextRoundButton" class="btn btn-primary game-button" onclick="startRound()">Volgende ronde</button>
+    </div>
+
+    <div id="gameOverBlock" class="text-center game-form" style="display: none;">
+        <a href="/" class="btn btn-primary game-button">Terug naar de homepagina</a>
+        <a href="/play" class="btn btn-primary game-button">Opnieuw</a>
+        <!--<button id="" class="btn btn-primary game-button" onclick="saveScore()">Sla score op</button>-->
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" th:src="@{/webapp/js/game.js}"></script>
 </body>
 </html>

@@ -23,13 +23,13 @@
     background-color: #ffbf24;
 }
 
-.guess-form {
+.game-form {
     width: 500px;
     margin: auto;
     margin-top: 20px;
 }
 
-.guess-button {
+.game-button {
     width: 100%;
     font-size: 20px;
     margin-top: 10px;
