@@ -113,7 +113,7 @@
                     <!-- Exclude Spring boot start and config classes -->
                     <excludes>
                         <exclude>**/AppConfig.*</exclude>
-                        <exclude>**/LingoWords.*</exclude>
+                        <exclude>**/LingoGame.*</exclude>
                         <exclude>**/GameDatabaseConfig.*</exclude>
                         <exclude>**/WordsDatabaseConfig.*</exclude>
                     </excludes>
