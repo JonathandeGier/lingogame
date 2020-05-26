@@ -18,6 +18,6 @@ public class WebController {
 
     @GetMapping("/highscores")
     public String highscores() {
-        return "webapp/highscores";
+        return "webapp/highscores.html";
     }
 }
