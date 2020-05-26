@@ -32,7 +32,7 @@ public class PostgresWordRepository implements WordRepository {
         selectQuery.setFirstResult(number);
         selectQuery.setMaxResults(1);
 
-        WordDTO word =  (WordDTO) selectQuery.getSingleResult();
+        WordDTO word = (WordDTO) selectQuery.getSingleResult();
 
         return word.getWord();
     }

@@ -13,6 +13,11 @@ public class WordDTO {
     @Column(name = "length", nullable = false)
     private int length;
 
+    public WordDTO() {}
+    public WordDTO(String word, int length) {
+        this.word = word;
+        this.length = length;
+    }
 
     public String getWord() {
         return word;
