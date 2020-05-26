@@ -10,8 +10,8 @@ services:
     volumes:
       - "words_db:/data/postgres"
     environment:
-      POSTGRES_USER: ${POSTGRES_WORDS_USER:-dev}
-      POSTGRES_PASSWORD: ${POSTGRES_WORDS_PASSWORD:-dev}
+      POSTGRES_USER: ${JDBC_WORDS_DATABASE_USERNAME:-dev}
+      POSTGRES_PASSWORD: ${JDBC_WORDS_DATABASE_PASSWORD:-dev}
       POSTGRES_DB: ${POSTGRES_WORDS_DB:-lingowords}
 
   game_db:
@@ -23,8 +23,8 @@ services:
     volumes:
       - "game_db:/data/postgres"
     environment:
-      POSTGRES_USER: ${POSTGRES_GAME_USER:-dev}
-      POSTGRES_PASSWORD: ${POSTGRES_GAME_PASSWORD:-dev}
+      POSTGRES_USER: ${JDBC_GAME_DATABASE_USERNAME:-dev}
+      POSTGRES_PASSWORD: ${JDBC_GAME_DATABASE_PASSWORD:-dev}
       POSTGRES_DB: ${POSTGRES_GAME_DB:-lingogame}
 
 networks:
