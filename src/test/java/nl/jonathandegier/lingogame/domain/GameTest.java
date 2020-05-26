@@ -66,6 +66,18 @@ public class GameTest {
     }
 
     @Test
+    @DisplayName("Test guess no round")
+    void test_guess_no_current_round() {
+        var wordRepositoryMock = wordRepositoryMock();
+
+        Game game = new Game(1, wordRepositoryMock);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            game.guess("woord");
+        });
+    }
+
+    @Test
     @DisplayName("Test calculate score")
     void test_calculate_score() {
         var wordRepositoryMock = wordRepositoryMock();
@@ -74,8 +86,20 @@ public class GameTest {
 
         game.newRound();
         game.guess("woord");
+        game.newRound();
+        game.guess("woords");
 
-        assertEquals(50, game.calculateScore());
+        assertEquals(100, game.calculateScore());
+    }
+
+    @Test
+    @DisplayName("Test calculate score while currentRound is null")
+    void test_calculate_score_no_current_round() {
+        var wordRepositoryMock = wordRepositoryMock();
+
+        Game game = new Game(1, wordRepositoryMock);
+
+        assertEquals(0, game.calculateScore());
     }
 
     private WordRepository wordRepositoryMock() {
