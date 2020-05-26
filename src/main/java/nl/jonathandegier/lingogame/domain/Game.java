@@ -38,6 +38,10 @@ public class Game {
     }
 
     public Feedback guess(String guess) {
+        if (this.currentRound == null) {
+            throw new IllegalArgumentException("No round started");
+        }
+
         return currentRound.guess(guess);
     }
 
@@ -48,7 +52,11 @@ public class Game {
             sum += r.calculateScore();
         }
 
-        return sum + this.currentRound.calculateScore();
+        if (this.currentRound != null) {
+            sum += this.currentRound.calculateScore();
+        }
+
+        return sum;
     }
 
     private int nextRoundWordLength() {
