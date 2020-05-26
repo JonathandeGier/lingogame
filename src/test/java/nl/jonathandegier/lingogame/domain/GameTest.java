@@ -72,9 +72,8 @@ public class GameTest {
 
         Game game = new Game(1, wordRepositoryMock);
 
-        var feedback1 = game.newRound();
-        game.guess("woord");
         game.newRound();
+        game.guess("woord");
 
         assertEquals(50, game.calculateScore());
     }
