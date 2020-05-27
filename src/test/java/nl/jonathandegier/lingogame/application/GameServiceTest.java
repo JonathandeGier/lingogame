@@ -2,7 +2,6 @@ package nl.jonathandegier.lingogame.application;
 
 import nl.jonathandegier.lingogame.domain.Game;
 import nl.jonathandegier.lingogame.domain.GameRepository;
-import nl.jonathandegier.lingogame.domain.ScoreRepository;
 import nl.jonathandegier.lingogame.domain.WordRepository;
 import nl.jonathandegier.lingogame.domain.score.Score;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +18,7 @@ public class GameServiceTest {
 
     private WordRepository wordRepositoryMock;
     private GameRepository gameRepositoryMock;
-    private ScoreRepository scoreRepositoryMock;
+    private HighScoreService highScoreServiceMock;
 
     private int gameId = 1;
 
@@ -28,7 +27,7 @@ public class GameServiceTest {
     void setUp() {
         var wordRepositoryMock = mock(WordRepository.class);
         var gameRepositoryMock = mock(GameRepository.class);
-        var scoreRepositoryMock = mock(ScoreRepository.class);
+        var highScoreServiceMock = mock(HighScoreService.class);
 
         when(wordRepositoryMock.randomWord(5)).thenReturn("woord");
         when(wordRepositoryMock.randomWord(6)).thenReturn("woords");
@@ -40,9 +39,9 @@ public class GameServiceTest {
 
         this.wordRepositoryMock = wordRepositoryMock;
         this.gameRepositoryMock = gameRepositoryMock;
-        this.scoreRepositoryMock = scoreRepositoryMock;
+        this.highScoreServiceMock = highScoreServiceMock;
 
-        this.gameService = new GameService(this.wordRepositoryMock, this.scoreRepositoryMock, this.gameRepositoryMock);
+        this.gameService = new GameService(this.wordRepositoryMock, this.highScoreServiceMock, this.gameRepositoryMock);
     }
 
     @Test
@@ -93,7 +92,7 @@ public class GameServiceTest {
         assertEquals(playerName, score.getPlayer());
 
         verify(this.gameRepositoryMock, times(1)).findGame(this.gameId);
-        verify(this.scoreRepositoryMock, times(1)).storeScore(score);
+        verify(this.highScoreServiceMock, times(1)).saveScore(score);
         verify(this.gameRepositoryMock, times(1)).deleteGame(this.gameId);
     }
 
