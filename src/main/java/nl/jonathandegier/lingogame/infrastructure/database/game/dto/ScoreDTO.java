@@ -29,8 +29,7 @@ public class ScoreDTO {
         this.score = score;
     }
     public ScoreDTO(Score score) {
-        this.name = score.getPlayer();
-        this.score = score.getScore();
+        this(score.getPlayer(), score.getScore());
     }
 
     public long getId() {
@@ -50,7 +49,7 @@ public class ScoreDTO {
         if (obj instanceof ScoreDTO) {
             ScoreDTO other = (ScoreDTO) obj;
 
-            return this.name.equals(other.name) && this.score == other.score;
+            return this.id == other.id && this.name.equals(other.name) && this.score == other.score;
         }
 
         return false;
@@ -58,6 +57,6 @@ public class ScoreDTO {
 
     @Override
     public int hashCode() {
-        return this.name.hashCode() + this.score;
+        return this.name.hashCode() + this.score + Long.hashCode(this.id);
     }
 }
