@@ -52,4 +52,14 @@ public class GameDatabaseConfig {
 
         return em;
     }
+
+    @Bean
+    public PlatformTransactionManager gameTransactionManager() {
+
+        JpaTransactionManager transactionManager
+                = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(
+                gameEntityManager().getObject());
+        return transactionManager;
+    }
 }

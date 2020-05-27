@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface ScoreRepository {
 
-    List<Score> getTopPage(int page, int perPage);
+    List<Score> getScores();
     void storeScore(Score score);
 }

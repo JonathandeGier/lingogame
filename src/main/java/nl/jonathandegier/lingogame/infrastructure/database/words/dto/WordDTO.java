@@ -3,7 +3,7 @@ package nl.jonathandegier.lingogame.infrastructure.database.words.dto;
 import javax.persistence.*;
 
 @Entity
-@Table(schema = "lingowords", name = "words", indexes = {@Index(name = "length_index", columnList = "length")})
+@Table(name = "words", indexes = {@Index(name = "length_index", columnList = "length")})
 public class WordDTO {
 
     @Id

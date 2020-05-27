@@ -1,14 +1,16 @@
 package nl.jonathandegier.lingogame.infrastructure.database.game.dto;
 
+import nl.jonathandegier.lingogame.domain.score.Score;
+
 import javax.persistence.*;
 
 @Entity
-@Table(schema = "lingogame", name = "scores")
+@Table(name = "scores")
 public class ScoreDTO {
 
     @Id
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -21,13 +23,17 @@ public class ScoreDTO {
         this.name = name;
         this.score = score;
     }
-    public ScoreDTO(int id, String name, int score) {
+    public ScoreDTO(long id, String name, int score) {
         this.id = id;
         this.name = name;
         this.score = score;
     }
+    public ScoreDTO(Score score) {
+        this.name = score.getPlayer();
+        this.score = score.getScore();
+    }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -37,5 +43,21 @@ public class ScoreDTO {
 
     public int getScore() {
         return score;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ScoreDTO) {
+            ScoreDTO other = (ScoreDTO) obj;
+
+            return this.name.equals(other.name) && this.score == other.score;
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.name.hashCode() + this.score;
     }
 }
