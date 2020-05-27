@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @DisplayName("WordDTO Test")
 public class WordDTOTest {
@@ -20,6 +21,13 @@ public class WordDTOTest {
                 Arguments.of(new WordDTO("word", 4), new WordDTO("word", 5), false),  // lengths are different
                 Arguments.of(new WordDTO("word", 4), new Object(), false)                           // different object
         );
+    }
+
+    @DisplayName("Test empty constructor")
+    @Test
+    void test_empty_constructor() {
+        WordDTO word = new WordDTO();
+        assertNull(word.getWord());
     }
 
     @DisplayName("Test Equals")
