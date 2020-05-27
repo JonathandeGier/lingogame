@@ -14,7 +14,7 @@ public class HighScoreService {
     }
 
     public List<Score> getHighscores() {
-        return scoreRepository.getScores();
+        return this.scoreRepository.getScores();
     }
 
     public void saveScore(Score score) {
