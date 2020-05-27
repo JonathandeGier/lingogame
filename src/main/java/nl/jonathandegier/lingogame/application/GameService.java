@@ -2,7 +2,6 @@ package nl.jonathandegier.lingogame.application;
 
 import nl.jonathandegier.lingogame.domain.Game;
 import nl.jonathandegier.lingogame.domain.GameRepository;
-import nl.jonathandegier.lingogame.domain.ScoreRepository;
 import nl.jonathandegier.lingogame.domain.WordRepository;
 import nl.jonathandegier.lingogame.domain.feedback.Feedback;
 import nl.jonathandegier.lingogame.domain.score.Score;
@@ -10,12 +9,12 @@ import nl.jonathandegier.lingogame.domain.score.Score;
 public class GameService {
 
     private WordRepository wordRepository;
-    private ScoreRepository scoreRepository;
+    private HighScoreService highScoreService;
     private GameRepository gameRepository;
 
-    public GameService(WordRepository wordRepository, ScoreRepository scoreRepository, GameRepository gameRepository) {
+    public GameService(WordRepository wordRepository, HighScoreService highScoreService, GameRepository gameRepository) {
         this.wordRepository = wordRepository;
-        this.scoreRepository = scoreRepository;
+        this.highScoreService = highScoreService;
         this.gameRepository = gameRepository;
     }
 
@@ -46,7 +45,7 @@ public class GameService {
         int score = game.calculateScore();
 
         Score s = new Score(player, score);
-        this.scoreRepository.storeScore(s);
+        this.highScoreService.saveScore(s);
         this.gameRepository.deleteGame(gameId);
 
         return s;

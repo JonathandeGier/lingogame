@@ -1,6 +1,7 @@
 package nl.jonathandegier.lingogame;
 
 import nl.jonathandegier.lingogame.application.GameService;
+import nl.jonathandegier.lingogame.application.HighScoreService;
 import nl.jonathandegier.lingogame.domain.GameRepository;
 import nl.jonathandegier.lingogame.domain.ScoreRepository;
 import nl.jonathandegier.lingogame.domain.WordRepository;
@@ -32,7 +33,12 @@ public class AppConfig {
     }
 
     @Bean
-    public GameService getGameService(GameRepository gameRepository, ScoreRepository scoreRepository, WordRepository wordRepository) {
-        return new GameService(wordRepository, scoreRepository, gameRepository);
+    public HighScoreService getHighScoreService(ScoreRepository scoreRepository) {
+        return new HighScoreService(scoreRepository);
+    }
+
+    @Bean
+    public GameService getGameService(GameRepository gameRepository, HighScoreService highScoreService, WordRepository wordRepository) {
+        return new GameService(wordRepository, highScoreService, gameRepository);
     }
 }
