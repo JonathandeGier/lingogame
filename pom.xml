@@ -9,6 +9,14 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+    <distributionManagement>
+        <repository>
+            <id>${env.DISTRIBUTION_ID}</id>
+            <name>${env.DISTRIBUTION_NAME}</name>
+            <url>${env.DISTRIBUTION_URL}</url>
+        </repository>
+    </distributionManagement>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
