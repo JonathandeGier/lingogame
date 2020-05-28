@@ -3,6 +3,7 @@ package nl.jonathandegier.lingogame.application;
 import nl.jonathandegier.lingogame.domain.Game;
 import nl.jonathandegier.lingogame.domain.GameRepository;
 import nl.jonathandegier.lingogame.domain.WordRepository;
+import nl.jonathandegier.lingogame.domain.feedback.Feedback;
 import nl.jonathandegier.lingogame.domain.score.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -47,8 +48,9 @@ public class GameServiceTest {
     @Test
     @DisplayName("Test start game")
     void test_start_game() {
-        this.gameService.startGame();
+        int id =  this.gameService.startGame();
 
+        assertEquals(this.gameId, id);
         verify(this.gameRepositoryMock, times(1)).getNextGameId();
         verify(this.gameRepositoryMock, times(1)).store(any());
     }
@@ -56,8 +58,9 @@ public class GameServiceTest {
     @Test
     @DisplayName("Test start round")
     void test_start_round() {
-        this.gameService.startRound(this.gameId);
+        Feedback feedback = this.gameService.startRound(this.gameId);
 
+        assertEquals("w", feedback.getGuess());
         verify(this.gameRepositoryMock, times(1)).findGame(this.gameId);
         verify(this.wordRepositoryMock, times(1)).randomWord(anyInt());
     }
@@ -67,8 +70,9 @@ public class GameServiceTest {
     void test_guess() {
         String guess = "wordt";
         this.gameService.startRound(gameId);
-        this.gameService.guess(this.gameId, guess);
+        Feedback feedback = this.gameService.guess(this.gameId, guess);
 
+        assertEquals("wordt", feedback.getGuess());
         verify(this.gameRepositoryMock, times(2)).findGame(this.gameId);
         verify(this.wordRepositoryMock, times(1)).validWord(guess);
     }

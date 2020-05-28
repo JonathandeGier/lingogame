@@ -45,6 +45,6 @@ public class PostgresScoreRepositoryTest {
 
         repository.storeScore(score);
 
-        verify(entityManagerMock, times(1)).persist(new ScoreDTO("player", 100));
+        verify(entityManagerMock, times(1)).persist(any());
     }
 }

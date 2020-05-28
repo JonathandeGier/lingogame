@@ -17,7 +17,10 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <start-class></start-class>
+        <start-class>nl.jonathandegier.lingogame.LingoGame</start-class>
+        <config-class>nl.jonathandegier.lingogame.AppConfig</config-class>
+        <words-db-config>nl.jonathandegier.lingogame.WordsDatabaseConfig</words-db-config>
+        <game-db-config>nl.jonathandegier.lingogame.GameDatabaseConfig</game-db-config>
         <java.version>14</java.version>
     </properties>
 
@@ -131,6 +134,43 @@
                         <phase>test</phase>
                         <goals>
                             <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- PiTest for mutation testing -->
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.5.0</version>
+
+                <configuration>
+                    <timestampedReports>false</timestampedReports>
+                    <mutationThreshold>90</mutationThreshold>
+                    <excludedClasses>
+                        <param>${start-class}</param>
+                        <param>${config-class}</param>
+                        <param>${game-db-config}</param>
+                        <param>${words-db-config}</param>
+                    </excludedClasses>
+
+                </configuration>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <version>0.12</version>
+                    </dependency>
+                </dependencies>
+
+                <executions>
+                    <execution>
+                        <id>post-unit-tests</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>mutationCoverage</goal>
                         </goals>
                     </execution>
                 </executions>

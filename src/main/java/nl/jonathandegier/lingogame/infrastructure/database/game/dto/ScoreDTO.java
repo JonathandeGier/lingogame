@@ -44,19 +44,4 @@ public class ScoreDTO {
         return score;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof ScoreDTO) {
-            ScoreDTO other = (ScoreDTO) obj;
-
-            return this.id == other.id && this.name.equals(other.name) && this.score == other.score;
-        }
-
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return this.name.hashCode() + this.score + Long.hashCode(this.id);
-    }
 }

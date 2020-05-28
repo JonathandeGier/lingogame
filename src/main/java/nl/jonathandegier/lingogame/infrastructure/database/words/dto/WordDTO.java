@@ -26,20 +26,4 @@ public class WordDTO {
     public int getLength() {
         return length;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof WordDTO) {
-            WordDTO other = (WordDTO) obj;
-
-            return this.word.equals(other.word) && this.length == other.length;
-        }
-
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return this.word.hashCode() + this.length;
-    }
 }
