@@ -1,7 +1,9 @@
 package nl.jonathandegier.lingogame.domain.feedback;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FeedbackBuilder {
 
@@ -49,25 +51,42 @@ public class FeedbackBuilder {
         return new Feedback(this.guess, feedbackElements, this.explaination, this.totalGuesses, this.guessesLeft, this.word.length());
     }
 
-    // TODO: Strategy pattern?
     private List<FeedbackElement> normalFeedback() {
-        char[] wordChars = this.word.toCharArray();
-        char[] guessChars = this.guess.toCharArray();
+        // make a list out of the characters of the word
+        List<Character> correctAndPresendCharacters = new ArrayList<>();
+        for (char c : this.word.toCharArray()) {
+            correctAndPresendCharacters.add(c);
+        }
 
-        List<FeedbackElement> feedback = new ArrayList<>();
+        // temporary store the elements in a map
+        // since the correct characters will be added first, we will need to order them later, so we set the index as key
+        Map<Integer, FeedbackElement> unOrderedElements = new HashMap<>();
 
-        for (int i = 0; i < guessChars.length; i++) {
-            FeedbackType type;
-            if (wordChars[i] == guessChars[i]) {
-                type = FeedbackType.CORRECT;
-            } else if (this.word.contains(Character.toString(guessChars[i]))) {
-                type = FeedbackType.PRESENT;
-                // todo: only if letter not in correct and not already marked as present
-            } else {
-                type = FeedbackType.ABSENT;
+        // get all the correct characters out or the list first
+        for (int i = 0; i < this.guess.length(); i++) {
+            if (this.word.charAt(i) == this.guess.charAt(i)) {
+                correctAndPresendCharacters.remove(Character.valueOf(this.guess.charAt(i)));
+                unOrderedElements.put(i, new FeedbackElement(this.guess.charAt(i), FeedbackType.CORRECT));
             }
+        }
 
-            feedback.add(new FeedbackElement(guessChars[i], type));
+        // go over the guessed characters again,
+        // if the character is still in the correctAndPresentCharacters list, then it is present, else absent
+        for (int i = 0; i < this.guess.length(); i++) {
+            if (this.word.charAt(i) != this.guess.charAt(i)) {
+                if (correctAndPresendCharacters.contains(this.guess.charAt(i))) {
+                    correctAndPresendCharacters.remove(Character.valueOf(this.guess.charAt(i)));
+                    unOrderedElements.put(i, new FeedbackElement(this.guess.charAt(i), FeedbackType.PRESENT));
+                } else {
+                    unOrderedElements.put(i, new FeedbackElement(this.guess.charAt(i), FeedbackType.ABSENT));
+                }
+            }
+        }
+
+        // order the elements
+        List<FeedbackElement> feedback = new ArrayList<>();
+        for (int i = 0; i < this.guess.length(); i++) {
+            feedback.add(unOrderedElements.get(i));
         }
 
         return feedback;
