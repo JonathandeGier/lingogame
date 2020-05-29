@@ -5,6 +5,7 @@ var givenFeedbacks;
 var guessBlock = document.getElementById('guessBlock');
 var nextRoundBlock = document.getElementById('nextRoundBlock');
 var gameOverBlock = document.getElementById('gameOverBlock');
+var saveScoreBlock = document.getElementById('saveScoreBlock');
 
 var messageBlock = document.getElementById('messageBlock');
 var scoreLabel = document.getElementById('scoreLabel');
@@ -90,11 +91,17 @@ function buildTable() {
                 if (i === 0 && initialFeedback.feedback[j] !== undefined && initialFeedback.feedback[j].feedbackType === "CORRECT") {
                     // no given feedback on the first guess means the game has just started, so display the initial feedback
                     cell.innerHTML = initialFeedback.guess.charAt(j).toUpperCase();
-                } else if (givenFeedbacks[i - 1] !== undefined && givenFeedbacks[i - 1].feedback[j] !== undefined && givenFeedbacks[i - 1].feedback[j].feedbackType === "CORRECT") {
+                } else if (givenFeedbacks[i - 1] !== undefined && givenFeedbacks[i - 1].explaination !== "CORRECT") {
                     // display correct letters of last feedback
-                    cell.innerHTML = givenFeedbacks[i - 1].guess.charAt(j).toUpperCase();
-                    // TODO: correct letter from all given feedbacks + initial feedback
-                    // TODO: if last guess was correct, do nothing
+                    if (j === 0) {
+                        cell.innerHTML = initialFeedback.guess.charAt(0).toUpperCase();
+                    } else {
+                        for(k = 0; k < i; k++) {
+                            if (givenFeedbacks[k].feedback[j] !== undefined && givenFeedbacks[k].feedback[j].feedbackType === "CORRECT") {
+                                cell.innerHTML = givenFeedbacks[k].feedback[j].letter.toUpperCase();
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -109,6 +116,16 @@ function updateScore() {
         .catch(error => console.error(error));
 }
 
+function saveScore() {
+    var playerName = document.getElementById("playerNameInput").value;
+
+    axios.post('/api/v1/game/' + gameId + '/score', {name: playerName})
+        .then(response => {
+            window.location.href = "/highscores";
+        })
+        .catch(error => console.error(error));
+}
+
 function displayScore(score) {
     scoreLabel.innerHTML = score;
 }
@@ -118,18 +135,28 @@ function showGuessBlock() {
     guessBlock.style.display = 'block';
     nextRoundBlock.style.display = 'none';
     gameOverBlock.style.display = 'none';
+    saveScoreBlock.style.display = 'none';
 }
 
 function showNextRoundBlock() {
     guessBlock.style.display = 'none';
     nextRoundBlock.style.display = 'block';
     gameOverBlock.style.display = 'none';
+    saveScoreBlock.style.display = 'none';
 }
 
 function showGameOverBlock() {
     guessBlock.style.display = 'none';
     nextRoundBlock.style.display = 'none';
     gameOverBlock.style.display = 'block';
+    saveScoreBlock.style.display = 'none';
+}
+
+function showSaveScoreForm() {
+    guessBlock.style.display = 'none';
+    nextRoundBlock.style.display = 'none';
+    gameOverBlock.style.display = 'none';
+    saveScoreBlock.style.display = 'block';
 }
 
 function displayMessage(message) {

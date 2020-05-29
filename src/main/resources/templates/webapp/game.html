@@ -30,7 +30,12 @@
     <div id="gameOverBlock" class="text-center game-form" style="display: none;">
         <a href="/" class="btn btn-primary game-button">Terug naar de homepagina</a>
         <a href="/play" class="btn btn-primary game-button">Opnieuw</a>
-        <!--<button id="" class="btn btn-primary game-button" onclick="saveScore()">Sla score op</button>-->
+        <button class="btn btn-primary game-button" onclick="showSaveScoreForm()">Sla score op</button>
+    </div>
+
+    <div id="saveScoreBlock" class="text-center game-form" style="display: none;">
+        <input  id="playerNameInput" type="text" class="form-control">
+        <button class="btn btn-primary game-button" onclick="saveScore()">Sla op</button>
     </div>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
