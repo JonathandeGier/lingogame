@@ -1,5 +1,7 @@
 package nl.jonathandegier.lingogame.domain;
 
+import nl.jonathandegier.lingogame.domain.exceptions.NoRoundStartedException;
+import nl.jonathandegier.lingogame.domain.exceptions.UncompletedRoundException;
 import nl.jonathandegier.lingogame.domain.feedback.Feedback;
 
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ public class Game {
     public Feedback newRound() {
         if (this.currentRound != null) {
             if (!this.currentRound.roundCompleted()) {
-                throw new IllegalArgumentException("Uncompleted round");
+                throw new UncompletedRoundException("cannot add a new round while the current round is uncompleted");
             }
 
             this.completedRounds.add(this.currentRound);
@@ -39,7 +41,7 @@ public class Game {
 
     public Feedback guess(String guess) {
         if (this.currentRound == null) {
-            throw new IllegalArgumentException("No round started");
+            throw new NoRoundStartedException("Could not find a current round. please start a new round");
         }
 
         return currentRound.guess(guess);

@@ -36,7 +36,7 @@ public class FeedbackBuilder {
 
     public Feedback build() {
         if (this.word == null || this.guess == null || this.explaination == null) {
-            throw new IllegalArgumentException("Missing required parameters");
+            throw new IllegalArgumentException("Missing required parameters to make feedback");
         }
 
         List<FeedbackElement> feedbackElements;

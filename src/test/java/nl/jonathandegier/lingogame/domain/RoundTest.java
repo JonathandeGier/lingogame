@@ -1,5 +1,7 @@
 package nl.jonathandegier.lingogame.domain;
 
+import nl.jonathandegier.lingogame.domain.exceptions.GameIsOverException;
+import nl.jonathandegier.lingogame.domain.exceptions.RoundNotStartedException;
 import nl.jonathandegier.lingogame.domain.feedback.Feedback;
 import nl.jonathandegier.lingogame.domain.feedback.FeedbackExplaination;
 import nl.jonathandegier.lingogame.domain.feedback.FeedbackType;
@@ -156,7 +158,7 @@ public class RoundTest {
     void test_not_started_throws_exception() {
         Round round = new Round(wordRepositoryMock(), 5);
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(RoundNotStartedException.class, () -> {
             round.guess("woord");
         });
     }
@@ -173,7 +175,7 @@ public class RoundTest {
         round.guess("wordt");
         round.guess("wordt");
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(GameIsOverException.class, () -> {
             round.guess("woord");
         });
     }
