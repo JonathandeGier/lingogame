@@ -8,6 +8,7 @@ import nl.jonathandegier.lingogame.domain.ScoreRepository;
 import nl.jonathandegier.lingogame.domain.WordRepository;
 import nl.jonathandegier.lingogame.domain.feedback.Feedback;
 import nl.jonathandegier.lingogame.domain.score.Score;
+import nl.jonathandegier.lingogame.infrastructure.database.game.dto.ScoreDTO;
 import nl.jonathandegier.lingogame.infrastructure.database.game.postgres.PostgresScoreRepository;
 import nl.jonathandegier.lingogame.infrastructure.database.memory.InMemoryGameRepository;
 import nl.jonathandegier.lingogame.infrastructure.database.words.dto.WordDTO;
@@ -19,6 +20,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -27,6 +29,8 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
 public class ServiceToRepo {
+
+    private Query scoreQueryMock;
 
     private Query countQueryMock;
     private Query selectQueryMock;
@@ -40,7 +44,11 @@ public class ServiceToRepo {
 
     @BeforeEach
     void setUp() {
+        this.scoreQueryMock = mock(Query.class);
+        when(this.scoreQueryMock.getResultList()).thenReturn(List.of(new ScoreDTO("player1", 200), new ScoreDTO("player2", 100)));
+
         this.scoreEntityManagerMock = mock(EntityManager.class);
+        when(this.scoreEntityManagerMock.createNativeQuery("select * from scores order by score desc", ScoreDTO.class)).thenReturn(this.scoreQueryMock);
 
         this.countQueryMock = mock(Query.class);
         when(this.countQueryMock.getSingleResult()).thenReturn(new BigInteger("1000"));
@@ -110,7 +118,7 @@ public class ServiceToRepo {
     }
 
     @Test
-    void test_save_score() {
+    void test_save_score_at_end_of_game() {
         int gameId = this.gameService.startGame();
         this.gameService.startRound(gameId);
         this.gameService.guess(gameId, "woord");
@@ -132,5 +140,27 @@ public class ServiceToRepo {
         assertThrows(GameNotFoundException.class, () -> {
             this.gameService.startRound(gameId);
         });
+    }
+
+    @Test
+    void test_get_highscores() {
+        List<Score> scores = this.highscoreService.getHighscores();
+
+        assertEquals(200, scores.get(0).getScore());
+        assertEquals("player1", scores.get(0).getPlayer());
+        assertEquals(100, scores.get(1).getScore());
+        assertEquals("player2", scores.get(1).getPlayer());
+
+        verify(this.scoreEntityManagerMock, times(1)).createNativeQuery("select * from scores order by score desc", ScoreDTO.class);
+        verify(this.scoreQueryMock, times(1)).getResultList();
+    }
+
+    @Test
+    void test_save_score() {
+        Score score = new Score("player", 300);
+
+        this.highscoreService.saveScore(score);
+
+        verify(this.scoreEntityManagerMock, times(1)).persist(any());
     }
 }
