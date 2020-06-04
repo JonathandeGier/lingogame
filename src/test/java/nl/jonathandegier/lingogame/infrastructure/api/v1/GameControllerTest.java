@@ -1,13 +1,21 @@
 package nl.jonathandegier.lingogame.infrastructure.api.v1;
 
 import nl.jonathandegier.lingogame.application.GameService;
+import nl.jonathandegier.lingogame.application.exceptions.GameNotFoundException;
+import nl.jonathandegier.lingogame.domain.exceptions.GameIsOverException;
+import nl.jonathandegier.lingogame.domain.exceptions.NoRoundStartedException;
+import nl.jonathandegier.lingogame.domain.exceptions.RoundNotStartedException;
+import nl.jonathandegier.lingogame.domain.exceptions.UncompletedRoundException;
 import nl.jonathandegier.lingogame.domain.feedback.Feedback;
 import nl.jonathandegier.lingogame.domain.score.Score;
+import nl.jonathandegier.lingogame.infrastructure.api.v1.dto.errors.ErrorBody;
+import nl.jonathandegier.lingogame.infrastructure.api.v1.dto.errors.ErrorType;
 import nl.jonathandegier.lingogame.infrastructure.api.v1.dto.requests.GuessRequest;
 import nl.jonathandegier.lingogame.infrastructure.api.v1.dto.requests.SaveScoreRequest;
 import nl.jonathandegier.lingogame.infrastructure.api.v1.dto.responses.GameCreatedResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -85,5 +93,75 @@ public class GameControllerTest {
 
         assertEquals(200, response.status);
         verify(this.gameServiceMock, times(1)).endGame(1);
+    }
+
+    @Test
+    void test_handle_game_not_found_exception() {
+        String message = "Game not found";
+        GameNotFoundException e = new GameNotFoundException(message);
+
+        var response = this.gameController.handleGameNotFoundException(e);
+        var body = (ErrorBody) response.getBody();
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals(404, body.statusInt);
+        assertEquals(message, body.message);
+        assertEquals(ErrorType.GAME_NOT_FOUND, body.type);
+    }
+
+    @Test
+    void test_handle_game_is_over_exception() {
+        String message = "Game is over";
+        GameIsOverException e = new GameIsOverException(message);
+
+        var response = this.gameController.handleGameIsOverException(e);
+        var body = (ErrorBody) response.getBody();
+
+        assertEquals(HttpStatus.NOT_ACCEPTABLE, response.getStatusCode());
+        assertEquals(406, body.statusInt);
+        assertEquals(message, body.message);
+        assertEquals(ErrorType.GAME_ALREADY_OVER, body.type);
+    }
+
+    @Test
+    void test_handle_no_round_started_exception() {
+        String message = "no round started";
+        NoRoundStartedException e = new NoRoundStartedException(message);
+
+        var response = this.gameController.handleNoRoundStartedException(e);
+        var body = (ErrorBody) response.getBody();
+
+        assertEquals(HttpStatus.NOT_ACCEPTABLE, response.getStatusCode());
+        assertEquals(406, body.statusInt);
+        assertEquals(message, body.message);
+        assertEquals(ErrorType.NO_ROUND_STARTED, body.type);
+    }
+
+    @Test
+    void test_handle_round_not_started_exception() {
+        String message = "Round not started";
+        RoundNotStartedException e = new RoundNotStartedException(message);
+
+        var response = this.gameController.handleRoundNotStartedException(e);
+        var body = (ErrorBody) response.getBody();
+
+        assertEquals(HttpStatus.NOT_ACCEPTABLE, response.getStatusCode());
+        assertEquals(406, body.statusInt);
+        assertEquals(message, body.message);
+        assertEquals(ErrorType.ROUND_NOT_STARTED, body.type);
+    }
+
+    @Test
+    void test_handle_uncompleted_round_exception() {
+        String message = "Uncompleted round";
+        UncompletedRoundException e = new UncompletedRoundException(message);
+
+        var response = this.gameController.handleUncompletedRoundException(e);
+        var body = (ErrorBody) response.getBody();
+
+        assertEquals(HttpStatus.NOT_ACCEPTABLE, response.getStatusCode());
+        assertEquals(406, body.statusInt);
+        assertEquals(message, body.message);
+        assertEquals(ErrorType.UNCOMPLETED_ROUND, body.type);
     }
 }
