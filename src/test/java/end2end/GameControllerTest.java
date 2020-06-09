@@ -2,9 +2,6 @@ package end2end;
 
 import nl.jonathandegier.lingogame.LingoGame;
 import nl.jonathandegier.lingogame.TestConfig;
-import nl.jonathandegier.lingogame.domain.WordRepository;
-import nl.jonathandegier.lingogame.infrastructure.database.words.dto.WordDTO;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +13,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.CoreMatchers.isA;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -30,9 +26,6 @@ public class GameControllerTest {
 
     @Autowired
     private MockMvc mvc;
-
-    @Autowired
-    private WordRepository wordRepository;
 
     @Test
     public void test_start_game() throws Exception {
@@ -139,6 +132,42 @@ public class GameControllerTest {
 
         mvc.perform(post("/api/v1/game/" + gameId + "/round"))
             .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void test_game_is_over() throws Exception {
+        int gameId = getGameId();
+        mvc.perform(post("/api/v1/game/" + gameId + "/round"));
+
+        mvc.perform(post("/api/v1/game/" + gameId + "/guess").content("{\"guess\": \"wordt\"}").contentType(MediaType.APPLICATION_JSON));
+        mvc.perform(post("/api/v1/game/" + gameId + "/guess").content("{\"guess\": \"wordt\"}").contentType(MediaType.APPLICATION_JSON));
+        mvc.perform(post("/api/v1/game/" + gameId + "/guess").content("{\"guess\": \"wordt\"}").contentType(MediaType.APPLICATION_JSON));
+        mvc.perform(post("/api/v1/game/" + gameId + "/guess").content("{\"guess\": \"wordt\"}").contentType(MediaType.APPLICATION_JSON));
+        mvc.perform(post("/api/v1/game/" + gameId + "/guess").content("{\"guess\": \"wordt\"}").contentType(MediaType.APPLICATION_JSON));
+
+        mvc.perform(post("/api/v1/game/" + gameId + "/guess").content("{\"guess\": \"wordt\"}").contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotAcceptable())
+            .andExpect(jsonPath("$.type", is("GAME_ALREADY_OVER")));
+    }
+
+    @Test
+    public void test_round_not_started() throws Exception {
+        int gameId = getGameId();
+
+        mvc.perform(post("/api/v1/game/" + gameId + "/guess").content("{\"guess\": \"wordt\"}").contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotAcceptable())
+            .andExpect(jsonPath("$.type", is("ROUND_NOT_STARTED")));
+
+    }
+
+    @Test
+    public void test_uncompleted_round() throws Exception {
+        int gameId = getGameId();
+        mvc.perform(post("/api/v1/game/" + gameId + "/round"));
+
+        mvc.perform(post("/api/v1/game/" + gameId + "/round"))
+            .andExpect(status().isNotAcceptable())
+            .andExpect(jsonPath("$.type", is("UNCOMPLETED_ROUND")));
     }
 
     private int getGameId() throws Exception {
