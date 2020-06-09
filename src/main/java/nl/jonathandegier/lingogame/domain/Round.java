@@ -1,5 +1,7 @@
 package nl.jonathandegier.lingogame.domain;
 
+import nl.jonathandegier.lingogame.domain.exceptions.GameIsOverException;
+import nl.jonathandegier.lingogame.domain.exceptions.RoundNotStartedException;
 import nl.jonathandegier.lingogame.domain.feedback.Feedback;
 import nl.jonathandegier.lingogame.domain.feedback.FeedbackBuilder;
 import nl.jonathandegier.lingogame.domain.feedback.FeedbackExplaination;
@@ -35,11 +37,11 @@ public class Round {
 
     public Feedback guess(String guess) {
         if (this.guesses == MAX_GUESSES) {
-            throw new IllegalArgumentException("This game is already over");
+            throw new GameIsOverException("This game is already over");
         }
 
         if (this.lastGuess == null) {
-            throw new IllegalArgumentException("Round not started yet");
+            throw new RoundNotStartedException("This round has not started yet. please start the round");
         }
 
         this.guesses++;
