@@ -3,7 +3,6 @@ package nl.jonathandegier.lingogame.infrastructure.api.v1;
 import nl.jonathandegier.lingogame.application.GameService;
 import nl.jonathandegier.lingogame.application.exceptions.GameNotFoundException;
 import nl.jonathandegier.lingogame.domain.exceptions.GameIsOverException;
-import nl.jonathandegier.lingogame.domain.exceptions.NoRoundStartedException;
 import nl.jonathandegier.lingogame.domain.exceptions.RoundNotStartedException;
 import nl.jonathandegier.lingogame.domain.exceptions.UncompletedRoundException;
 import nl.jonathandegier.lingogame.domain.feedback.Feedback;
@@ -79,11 +78,6 @@ public class GameController {
     @ExceptionHandler(GameIsOverException.class)
     public ResponseEntity handleGameIsOverException(GameIsOverException e) {
         return new ResponseEntity(new ErrorBody(HttpStatus.NOT_ACCEPTABLE, e.getMessage(), ErrorType.GAME_ALREADY_OVER), HttpStatus.NOT_ACCEPTABLE);
-    }
-
-    @ExceptionHandler(NoRoundStartedException.class)
-    public ResponseEntity handleNoRoundStartedException(NoRoundStartedException e) {
-        return new ResponseEntity(new ErrorBody(HttpStatus.NOT_ACCEPTABLE, e.getMessage(), ErrorType.NO_ROUND_STARTED), HttpStatus.NOT_ACCEPTABLE);
     }
 
     @ExceptionHandler(RoundNotStartedException.class)

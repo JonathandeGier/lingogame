@@ -3,7 +3,6 @@ package nl.jonathandegier.lingogame.infrastructure.api.v1;
 import nl.jonathandegier.lingogame.application.GameService;
 import nl.jonathandegier.lingogame.application.exceptions.GameNotFoundException;
 import nl.jonathandegier.lingogame.domain.exceptions.GameIsOverException;
-import nl.jonathandegier.lingogame.domain.exceptions.NoRoundStartedException;
 import nl.jonathandegier.lingogame.domain.exceptions.RoundNotStartedException;
 import nl.jonathandegier.lingogame.domain.exceptions.UncompletedRoundException;
 import nl.jonathandegier.lingogame.domain.feedback.Feedback;
@@ -121,20 +120,6 @@ public class GameControllerTest {
         assertEquals(406, body.statusInt);
         assertEquals(message, body.message);
         assertEquals(ErrorType.GAME_ALREADY_OVER, body.type);
-    }
-
-    @Test
-    void test_handle_no_round_started_exception() {
-        String message = "no round started";
-        NoRoundStartedException e = new NoRoundStartedException(message);
-
-        var response = this.gameController.handleNoRoundStartedException(e);
-        var body = (ErrorBody) response.getBody();
-
-        assertEquals(HttpStatus.NOT_ACCEPTABLE, response.getStatusCode());
-        assertEquals(406, body.statusInt);
-        assertEquals(message, body.message);
-        assertEquals(ErrorType.NO_ROUND_STARTED, body.type);
     }
 
     @Test

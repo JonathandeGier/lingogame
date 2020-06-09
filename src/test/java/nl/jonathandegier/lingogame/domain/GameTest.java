@@ -1,6 +1,6 @@
 package nl.jonathandegier.lingogame.domain;
 
-import nl.jonathandegier.lingogame.domain.exceptions.NoRoundStartedException;
+import nl.jonathandegier.lingogame.domain.exceptions.RoundNotStartedException;
 import nl.jonathandegier.lingogame.domain.exceptions.UncompletedRoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -74,7 +74,7 @@ public class GameTest {
 
         Game game = new Game(1, wordRepositoryMock);
 
-        assertThrows(NoRoundStartedException.class, () -> {
+        assertThrows(RoundNotStartedException.class, () -> {
             game.guess("woord");
         });
     }

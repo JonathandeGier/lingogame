@@ -1,6 +1,6 @@
 package nl.jonathandegier.lingogame.domain;
 
-import nl.jonathandegier.lingogame.domain.exceptions.NoRoundStartedException;
+import nl.jonathandegier.lingogame.domain.exceptions.RoundNotStartedException;
 import nl.jonathandegier.lingogame.domain.exceptions.UncompletedRoundException;
 import nl.jonathandegier.lingogame.domain.feedback.Feedback;
 
@@ -41,7 +41,7 @@ public class Game {
 
     public Feedback guess(String guess) {
         if (this.currentRound == null) {
-            throw new NoRoundStartedException("Could not find a current round. please start a new round");
+            throw new RoundNotStartedException("Could not find a current round. please start a new round");
         }
 
         return currentRound.guess(guess);
