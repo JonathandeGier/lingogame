@@ -6,14 +6,24 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/webapp/style/main.css}">
+
+    <!-- Datatables: https://datatables.net -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.21/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.21/datatables.min.js"></script>
+
+    <!-- Axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
-<h1 class="text-center game-title">Highscores</h1>
-<div class="text-center message">Highscores komen binnenkort</div>
+    <h1 class="text-center game-title">Highscores</h1>
+    <div id="datatable-boundery" style="max-width: 50%;margin: auto">
+        <table id="scoresTable"></table>
+    </div>
 
-<div class="text-center">
-    <a href="/" class="btn btn-primary button">Home</a>
-</div>
+    <div class="text-center">
+        <a href="/" class="btn btn-primary button">Home</a>
+    </div>
 
+    <script th:src="@{/webapp/js/datatable.js}"></script>
 </body>
 </html>

@@ -180,16 +180,6 @@
                         <version>0.12</version>
                     </dependency>
                 </dependencies>
-
-                <executions>
-                    <execution>
-                        <id>post-unit-tests</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>mutationCoverage</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
 
         </plugins>
