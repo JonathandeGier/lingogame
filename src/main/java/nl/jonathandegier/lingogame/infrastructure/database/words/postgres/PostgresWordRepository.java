@@ -13,6 +13,7 @@ import java.util.Random;
 public class PostgresWordRepository implements WordRepository {
 
     private EntityManager entityManager;
+    private Random rand = new Random();
 
     public PostgresWordRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -24,8 +25,7 @@ public class PostgresWordRepository implements WordRepository {
         countQuery.setParameter(1, length);
         BigInteger count = (BigInteger) countQuery.getSingleResult();
 
-        Random random = new Random();
-        int number = random.nextInt(count.intValue());
+        int number = this.rand.nextInt(count.intValue());
 
         Query selectQuery = entityManager.createNativeQuery("select * from words where length = ?", WordDTO.class);
         selectQuery.setParameter(1, length);

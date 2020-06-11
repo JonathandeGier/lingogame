@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @DisplayName("GameService Test")
-public class GameServiceTest {
+class GameServiceTest {
 
     private GameService gameService;
 
@@ -92,7 +92,7 @@ public class GameServiceTest {
         String playerName = "player";
         Score score = this.gameService.saveScore(this.gameId, playerName);
 
-        assertEquals(0, score.getScore());
+        assertEquals(0, score.getPoints());
         assertEquals(playerName, score.getPlayer());
 
         verify(this.gameRepositoryMock, times(1)).findGame(this.gameId);

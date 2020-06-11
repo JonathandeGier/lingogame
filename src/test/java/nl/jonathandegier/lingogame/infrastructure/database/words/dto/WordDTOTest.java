@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @DisplayName("WordDTO Test")
-public class WordDTOTest {
+class WordDTOTest {
 
     @DisplayName("Test empty constructor")
     @Test

@@ -96,7 +96,7 @@ public class GameControllerTest {
 
         mvc.perform(get("/api/v1/game/" + gameId + "/score"))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.score", is(50)));
+            .andExpect(jsonPath("$.points", is(50)));
     }
 
     @Test
@@ -113,7 +113,7 @@ public class GameControllerTest {
 
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.status", is(200)))
-            .andExpect(jsonPath("$.finalScore.score", is(50)));
+            .andExpect(jsonPath("$.finalScore.points", is(50)));
 
         mvc.perform(post("/api/v1/game/" + gameId + "/round"))
             .andExpect(status().isNotFound());

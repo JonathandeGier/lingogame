@@ -71,22 +71,22 @@ public class GameController {
 
 
     @ExceptionHandler(GameNotFoundException.class)
-    public ResponseEntity handleGameNotFoundException(GameNotFoundException e) {
+    public ResponseEntity<ErrorBody> handleGameNotFoundException(GameNotFoundException e) {
         return new ResponseEntity(new ErrorBody(HttpStatus.NOT_FOUND, e.getMessage(), ErrorType.GAME_NOT_FOUND), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(GameIsOverException.class)
-    public ResponseEntity handleGameIsOverException(GameIsOverException e) {
+    public ResponseEntity<ErrorBody> handleGameIsOverException(GameIsOverException e) {
         return new ResponseEntity(new ErrorBody(HttpStatus.NOT_ACCEPTABLE, e.getMessage(), ErrorType.GAME_ALREADY_OVER), HttpStatus.NOT_ACCEPTABLE);
     }
 
     @ExceptionHandler(RoundNotStartedException.class)
-    public ResponseEntity handleRoundNotStartedException(RoundNotStartedException e) {
+    public ResponseEntity<ErrorBody> handleRoundNotStartedException(RoundNotStartedException e) {
         return new ResponseEntity(new ErrorBody(HttpStatus.NOT_ACCEPTABLE, e.getMessage(), ErrorType.ROUND_NOT_STARTED), HttpStatus.NOT_ACCEPTABLE);
     }
 
     @ExceptionHandler(UncompletedRoundException.class)
-    public ResponseEntity handleUncompletedRoundException(UncompletedRoundException e) {
+    public ResponseEntity<ErrorBody> handleUncompletedRoundException(UncompletedRoundException e) {
         return new ResponseEntity(new ErrorBody(HttpStatus.NOT_ACCEPTABLE, e.getMessage(), ErrorType.UNCOMPLETED_ROUND), HttpStatus.NOT_ACCEPTABLE);
     }
 }

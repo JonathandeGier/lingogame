@@ -12,7 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class PostgresScoreRepositoryTest {
+class PostgresScoreRepositoryTest {
 
     @Test
     void test_get_scores() {
@@ -30,9 +30,9 @@ public class PostgresScoreRepositoryTest {
         List<Score> scores = repository.getScores();
 
         assertEquals("player", scores.get(0).getPlayer());
-        assertEquals(200, scores.get(0).getScore());
+        assertEquals(200, scores.get(0).getPoints());
         assertEquals("player2", scores.get(1).getPlayer());
-        assertEquals(100, scores.get(1).getScore());
+        assertEquals(100, scores.get(1).getPoints());
 
         verify(queryMock, times(1)).getResultList();
     }

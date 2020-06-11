@@ -19,7 +19,7 @@ import org.springframework.http.HttpStatus;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class GameControllerTest {
+class GameControllerTest {
 
     private GameService gameServiceMock;
     private GameController gameController;
@@ -35,7 +35,7 @@ public class GameControllerTest {
         when(this.gameServiceMock.startGame()).thenReturn(1);
         GameCreatedResponse response = this.gameController.startGame();
 
-        assertEquals(1, response.gameId);
+        assertEquals(1, response.getGameId());
         verify(this.gameServiceMock, times(1)).startGame();
     }
 
@@ -67,7 +67,7 @@ public class GameControllerTest {
         when(this.gameServiceMock.getScore(anyInt())).thenReturn(50);
         Score response = this.gameController.getScore(1);
 
-        assertEquals(50, response.getScore());
+        assertEquals(50, response.getPoints());
         verify(this.gameServiceMock, times(1)).getScore(1);
     }
 
@@ -81,8 +81,8 @@ public class GameControllerTest {
 
         var response = this.gameController.saveScore(1, saveRequest);
 
-        assertEquals(200, response.status);
-        assertEquals(expectedScore, response.finalScore);
+        assertEquals(200, response.getStatus());
+        assertEquals(expectedScore, response.getFinalScore());
         verify(this.gameServiceMock, times(1)).saveScore(1, "player");
     }
 
@@ -90,7 +90,7 @@ public class GameControllerTest {
     void test_end_game() {
         var response = this.gameController.endGame(1);
 
-        assertEquals(200, response.status);
+        assertEquals(200, response.getStatus());
         verify(this.gameServiceMock, times(1)).endGame(1);
     }
 
@@ -103,9 +103,9 @@ public class GameControllerTest {
         var body = (ErrorBody) response.getBody();
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        assertEquals(404, body.statusInt);
-        assertEquals(message, body.message);
-        assertEquals(ErrorType.GAME_NOT_FOUND, body.type);
+        assertEquals(404, body.getStatusInt());
+        assertEquals(message, body.getMessage());
+        assertEquals(ErrorType.GAME_NOT_FOUND, body.getType());
     }
 
     @Test
@@ -117,9 +117,9 @@ public class GameControllerTest {
         var body = (ErrorBody) response.getBody();
 
         assertEquals(HttpStatus.NOT_ACCEPTABLE, response.getStatusCode());
-        assertEquals(406, body.statusInt);
-        assertEquals(message, body.message);
-        assertEquals(ErrorType.GAME_ALREADY_OVER, body.type);
+        assertEquals(406, body.getStatusInt());
+        assertEquals(message, body.getMessage());
+        assertEquals(ErrorType.GAME_ALREADY_OVER, body.getType());
     }
 
     @Test
@@ -131,9 +131,9 @@ public class GameControllerTest {
         var body = (ErrorBody) response.getBody();
 
         assertEquals(HttpStatus.NOT_ACCEPTABLE, response.getStatusCode());
-        assertEquals(406, body.statusInt);
-        assertEquals(message, body.message);
-        assertEquals(ErrorType.ROUND_NOT_STARTED, body.type);
+        assertEquals(406, body.getStatusInt());
+        assertEquals(message, body.getMessage());
+        assertEquals(ErrorType.ROUND_NOT_STARTED, body.getType());
     }
 
     @Test
@@ -145,8 +145,8 @@ public class GameControllerTest {
         var body = (ErrorBody) response.getBody();
 
         assertEquals(HttpStatus.NOT_ACCEPTABLE, response.getStatusCode());
-        assertEquals(406, body.statusInt);
-        assertEquals(message, body.message);
-        assertEquals(ErrorType.UNCOMPLETED_ROUND, body.type);
+        assertEquals(406, body.getStatusInt());
+        assertEquals(message, body.getMessage());
+        assertEquals(ErrorType.UNCOMPLETED_ROUND, body.getType());
     }
 }

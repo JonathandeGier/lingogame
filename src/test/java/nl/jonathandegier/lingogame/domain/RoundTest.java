@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @DisplayName("Round Test")
-public class RoundTest {
+class RoundTest {
 
     private static Stream<Arguments> scoresWithAmountOfGuesses() {
         return Stream.of(

@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("FeedbackBuilder Test")
-public class FeedbackBuilderTest {
+class FeedbackBuilderTest {
 
     private static final FeedbackType CORRECT = FeedbackType.CORRECT;
     private static final FeedbackType PRESENT = FeedbackType.PRESENT;

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Webcontroller Test")
-public class WebControllerTest {
+class WebControllerTest {
 
     @Test
     @DisplayName("Test get homepage")

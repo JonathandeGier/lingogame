@@ -40,8 +40,8 @@ public class HighscoreControllerTest {
 
         // expect the scores in the right order
             .andExpect(jsonPath("$[0].player", is("player2")))
-            .andExpect(jsonPath("$[0].score", is(200)))
+            .andExpect(jsonPath("$[0].points", is(200)))
             .andExpect(jsonPath("$[1].player", is("player1")))
-            .andExpect(jsonPath("$[1].score", is(100)));
+            .andExpect(jsonPath("$[1].points", is(100)));
     }
 }

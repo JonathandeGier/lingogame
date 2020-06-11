@@ -4,7 +4,7 @@ function processData(data) {
         dataRow = [];
 
         dataRow.push(entry.player);
-        dataRow.push(entry.score);
+        dataRow.push(entry.points);
 
         dataArray.push(dataRow);
     });
