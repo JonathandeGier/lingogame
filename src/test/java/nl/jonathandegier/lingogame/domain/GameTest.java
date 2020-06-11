@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @DisplayName("Game Test")
-public class GameTest {
+class GameTest {
 
     @Test
     @DisplayName("Test get ID")

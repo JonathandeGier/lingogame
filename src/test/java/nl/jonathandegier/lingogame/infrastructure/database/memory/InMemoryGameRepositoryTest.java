@@ -13,7 +13,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("InMemoryGameRepository Test")
-public class InMemoryGameRepositoryTest {
+class InMemoryGameRepositoryTest {
 
     @Test
     @DisplayName("Test store and get game")

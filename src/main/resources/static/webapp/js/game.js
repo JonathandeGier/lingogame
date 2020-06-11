@@ -111,7 +111,7 @@ function buildTable() {
 function updateScore() {
     axios.get('/api/v1/game/' + gameId + '/score')
         .then(response => {
-            displayScore(response.data.score);
+            displayScore(response.data.points);
         })
         .catch(error => console.error(error));
 }

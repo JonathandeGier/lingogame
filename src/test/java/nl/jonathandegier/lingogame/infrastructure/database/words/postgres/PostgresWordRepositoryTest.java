@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @DisplayName("PostgresWordRepository Test")
-public class PostgresWordRepositoryTest {
+class PostgresWordRepositoryTest {
 
     private static Stream<Arguments> validWords() {
         return Stream.of(

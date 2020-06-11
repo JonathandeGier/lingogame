@@ -29,7 +29,7 @@ public class ScoreDTO {
         this.score = score;
     }
     public ScoreDTO(Score score) {
-        this(score.getPlayer(), score.getScore());
+        this(score.getPlayer(), score.getPoints());
     }
 
     public long getId() {

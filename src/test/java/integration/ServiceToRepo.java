@@ -28,7 +28,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
-public class ServiceToRepo {
+class ServiceToRepo {
 
     private Query scoreQueryMock;
 
@@ -125,7 +125,7 @@ public class ServiceToRepo {
 
         Score score = this.gameService.saveScore(gameId, "player");
 
-        assertEquals(50, score.getScore());
+        assertEquals(50, score.getPoints());
         assertEquals("player", score.getPlayer());
 
         verify(this.scoreEntityManagerMock, times(1)).persist(any());
@@ -146,9 +146,9 @@ public class ServiceToRepo {
     void test_get_highscores() {
         List<Score> scores = this.highscoreService.getHighscores();
 
-        assertEquals(200, scores.get(0).getScore());
+        assertEquals(200, scores.get(0).getPoints());
         assertEquals("player1", scores.get(0).getPlayer());
-        assertEquals(100, scores.get(1).getScore());
+        assertEquals(100, scores.get(1).getPoints());
         assertEquals("player2", scores.get(1).getPlayer());
 
         verify(this.scoreEntityManagerMock, times(1)).createNativeQuery("select * from scores order by score desc", ScoreDTO.class);

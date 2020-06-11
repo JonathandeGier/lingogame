@@ -4,11 +4,19 @@ import nl.jonathandegier.lingogame.domain.score.Score;
 
 public class ScoreSavedResponse {
 
-    public int status;
-    public Score finalScore;
+    private int status;
+    private Score finalScore;
 
     public ScoreSavedResponse(int status, Score finalScore) {
         this.status = status;
         this.finalScore = finalScore;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public Score getFinalScore() {
+        return finalScore;
     }
 }

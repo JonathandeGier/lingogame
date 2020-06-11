@@ -5,7 +5,7 @@ import java.util.List;
 public class Feedback {
 
     private String guess;
-    private List<FeedbackElement> feedback;
+    private List<FeedbackElement> feedbackElements;
     private FeedbackExplaination explaination;
     private int totalGuesses;
     private int guessesLeft;
@@ -13,7 +13,7 @@ public class Feedback {
 
     public Feedback(String guess, List<FeedbackElement> feedback, FeedbackExplaination explaination, int totalGuesses, int guessesLeft, int wordLength) {
         this.guess = guess;
-        this.feedback = feedback;
+        this.feedbackElements = feedback;
         this.explaination = explaination;
         this.totalGuesses = totalGuesses;
         this.guessesLeft = guessesLeft;
@@ -25,7 +25,7 @@ public class Feedback {
     }
 
     public List<FeedbackElement> getFeedback() {
-        return this.feedback;
+        return this.feedbackElements;
     }
 
     public FeedbackExplaination getExplaination() {

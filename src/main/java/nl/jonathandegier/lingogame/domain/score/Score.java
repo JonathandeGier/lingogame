@@ -3,11 +3,11 @@ package nl.jonathandegier.lingogame.domain.score;
 public class Score {
 
     private String player;
-    private int score;
+    private int points;
 
-    public Score(String player, int score) {
+    public Score(String player, int points) {
         this.player = player;
-        this.score = score;
+        this.points = points;
     }
 
 
@@ -15,7 +15,7 @@ public class Score {
         return player;
     }
 
-    public int getScore() {
-        return score;
+    public int getPoints() {
+        return points;
     }
 }
