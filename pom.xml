@@ -30,6 +30,9 @@
         <words-db-config>nl.jonathandegier.lingogame.WordsDatabaseConfig</words-db-config>
         <game-db-config>nl.jonathandegier.lingogame.GameDatabaseConfig</game-db-config>
         <java.version>14</java.version>
+        <sonar.projectKey>JonathandeGier_lingogame</sonar.projectKey>
+        <sonar.organization>jonathandegier</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <dependencies>
@@ -183,5 +186,15 @@
             </plugin>
 
         </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.sonarsource.scanner.maven</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>3.7.0.1746</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>
